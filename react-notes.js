@@ -205,7 +205,7 @@ function FeedbackList({feedback}) {
 //start at app level component where global state is, and define function with intended functionality
 const deleteFeedback = (id) => {
      if (window.confirm('Are you sure you want to delete?')) {
-       setFeedback(feedback.filter((item) => item.id !== id))}}
+          setFeedback(feedback.filter((item) => item.id !== id))}}
 //pass function reference via prop
 <FeedbackList handleDelete={deleteFeedback} />
 //keep passing function reference via prop to get to very end component, where function reference is called with argument, this argument is passed to original function and called from app component
@@ -219,5 +219,79 @@ function FeedbackItem({item, handleDelete}) {
 // PASSING ARGUMENTS TO FUNCTIONS
 // to pass arguments to event handlers or functions, we pass via arrow function inside curly braces, instead of {this.fnName()} we use:
 {() => this.fnName(arg)}
+
+//Framer-motion library used for animations
+import {motion, AnimatePresence} from 'framer-motion'
+//implementation found in FeedbackList.jsx component
+
+//******************************************************* */
+// ROUTING
+//******************************************************* */
+npm i react-router-dom
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+//BrowserRouter uses the HTML5 history API to keep our user interface in sync with the URL, most common way to implement routing
+//Route is specific component to render whatever you want
+return (
+     <Router>
+       <Header />
+       <div className="container">
+         <Routes>
+           <Route
+             exact
+             path="/"
+             element={
+                  <>
+                 <FeedbackForm handleAdd={addFeedback} />
+                 <FeedbackStats feedback={feedback} />
+                 <FeedbackList
+                   handleDelete={deleteFeedback}
+                   feedback={feedback}
+                 />
+               </>
+             }
+             ></Route>
+ 
+           <Route path="/about" element={<AboutPage />} />
+           <Route path="/post/*" element={<AboutPage />} />  * allows routing in post component
+         </Routes>
+       </div>
+     </Router>
+   )
+   //theres also something called hash router, uses the hash portion of the URL to keep it in sync
+   
+   // LINKS
+//links allow instant navigation within application instead of using a tag that causes reload
+import { Link } from 'react-router-dom'
+<>// not needed
+<Link to="/">Back to home</Link>
+//you can also pass query parameters and hash parameters with link tag
+<Link to={{
+     pathname:"/",
+     search: "?sort=name",
+     hash: "#hello"
+}}>Back to home</Link>
+
+<NavLink to="/" activeClassName="active">Back to home</NavLink>
+//navlink link component like link is used to navigate but it can also allow you to hold a specific class for active links
+
+//useParams hook is used to allow component to grab parameters in url and use them in component
+<Route to="/about/:id"/>
+</> //not needed, used to allow removal of syntax highlighting from ide
+import {useParams} from 'react-router-dom'
+const params = useParams()
+<h1>Post {params.id}</h1>
+
+//to navigate to another page:
+import { Navigate, useNavigate} from "react-router-dom"
+// do it this way
+const navigate = useNavigate()
+const onClick = () => { navigate("/about")}
+// or this way
+if(status === 404) return <Navigate to "/notFound"/>
+
+//******************************************************* */
+// CONTEXT
+// context provides a way to pass data through the component tree without having to pass props down manually at every level
+//******************************************************* */
 
 
