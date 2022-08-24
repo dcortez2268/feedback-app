@@ -53,7 +53,7 @@ npm start
 //********************************************************* */
 //                       common code
 //********************************************************* */
-import React from 'react'; React.createElement();// creates React element
+import React, { useEffect } from 'react'; React.createElement();// creates React element
 import ReactDOM from 'react-dom'; ReactDOM.render();//allows us to interact with dom
 <React.StrictMode></React.StrictMode> // found in index.js, allows React to perform additional error checks, wraps <App/> component
 React.Fragment, <></>  // JSX expressions must be wrapped in one element, you can use empty fragment to wrap elements for React.fragment if you do not want to use Div
@@ -166,7 +166,7 @@ Pagination.propTypes = {
 // component level state: data associated with that one specific component
 
 // useState Hook
-// use useState hook to modify component level state
+// use useState hook to modify component level state, put in context to provide global state
 // argument given in useState function initializes data to 7, 
 // useState function returns array that can be destructured
 // reference variable, rating, is assigned to state
@@ -293,5 +293,25 @@ if(status === 404) return <Navigate to "/notFound"/>
 // CONTEXT
 // context provides a way to pass data through the component tree without having to pass props down manually at every level
 //******************************************************* */
+//see App.js component 
+//see FeedbackContex.js component, is component that stores global state
+//to access state in other components, implement like this:
+import { useContext } from 'react'
+import FeedbackContext from '../context/FeedbackContext'
+
+const { feedback } = useContext(FeedbackContext)
+//and thats it, now we no longer need to pass data via App.js and prop drilling because the data is available in any component that implements useContext hook
+
+
+// useEffect HOOK
+// effect, side effect: in our project when we want the form to get the text and the rating from the current feedback
+// how we deal with these is a hook called useEffect
+// callback gets called when something in array changes, if left empty the function is called when component is rendered
+useEffect(() => { function to run }, [array of dependencies])
+
+
+
+
+
 
 
