@@ -127,7 +127,7 @@ function Card({children, reverse}) {
         )}
 // ICONS
 npm i react-icons //new package that includes materialize, fontawsome, maybe bootstrap icons
-import {FaTimes} from 'react-icons/fa'// x icon
+import {FaOldRepublic, FaTimes} from 'react-icons/fa'// x icon
 
 // PROPS VS STATE
 // Props are data we pass to component via attributes and component state is private data that is local to that Component, Props are read-only
@@ -310,8 +310,34 @@ const { feedback } = useContext(FeedbackContext)
 useEffect(() => { function to run }, [array of dependencies])
 
 
+//******************************************************* */
+// TO DEPLOY ON NETLIFY
+//******************************************************* */
+// builds a production build located in build directory
+npm run build
+// if you want to serve production build:
+npm i -g serve
+serve -s build //serves whats in build folder on localhost 5000
+// if you want to deploy on netlify, create account, connect github, and that's it, very easy to use!
+// reccomends vercel as another popular hosting option
 
 
+// JSON SERVER: package that allows us to create fake REST API used for quick back end prototyping and mocking
+npm i json-server
+//add to scripts object to run server, db.json is the name of the file that contains our data, we have to specify port 5000 because json-server runs by default on port 3000 and so does react
+"server": "json-server --watch db.json --port 5000"
+npm run server
+//created db.json file, this file acts as database with data
+// tested with Postman to send requests to mock backend, worked and updates file based on requests sent,
+
+// CONCURRENTLY: package that allows us to run multiple scripts with one command so we do not need to run two terminals to run React App and server
+npm i concurrently
+
+// PROXY:
+//lined added to package.json so fetch requests do not have to include this part of url in each fetch call
+"proxy": "http://localhost:5000",
+//now can be called like this:
+fetch('/feedback?_sort=id&_order=desc')
 
 
 
