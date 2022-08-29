@@ -338,6 +338,8 @@ npm i concurrently
 "proxy": "http://localhost:5000",
 //now can be called like this:
 fetch('/feedback?_sort=id&_order=desc')
+//instead of: 
+fetch('http://localhost:5000/feedback?_sort=id&_order=desc')
 
 
 
